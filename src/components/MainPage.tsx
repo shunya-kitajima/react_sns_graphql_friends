@@ -55,7 +55,9 @@ const MainPage: React.FC = () => {
       variables: {
         id: node.id,
         friends: [
-          ...node.profilesFriends.edges.map(({ node }: any) => node.id),
+          ...node.profilesFriends.edges.map(
+            ({ node }: any) => node.userProf.id
+          ),
           dataMyProfile.profile.userProf.id,
         ],
       },
