@@ -23,6 +23,14 @@ const MainPage: React.FC = () => {
   const { data: dataProfiles, error: errorProfiles } = useQuery(GET_PROFILES, {
     fetchPolicy: 'cache-and-network',
   })
+  const myFriends = dataMyProfile?.profile.friends.edges.map(
+    ({ node }: any) => node.id
+  )
+  const myfriendRequests = dataMyProfile.profile.friendRequests.edges.map(
+    ({ node }: any) => node.id
+  )
+  const [updateFriends] = useMutation(UPDATE_FRIENDS)
+  const [updateFriendRequests] = useMutation(UPDATE_FRIEND_REQUESTS)
 
   return (
     <div>
