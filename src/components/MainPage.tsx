@@ -32,6 +32,18 @@ const MainPage: React.FC = () => {
   const [updateFriends] = useMutation(UPDATE_FRIENDS)
   const [updateFriendRequests] = useMutation(UPDATE_FRIEND_REQUESTS)
 
+  const sendFriendRequest = async (node: any): Promise<void> => {
+    await updateFriendRequests({
+      variables: {
+        id: node.id,
+        friendRequests: [
+          ...node.friendRequests.edges.map(({ node }: any) => node.id),
+          dataMyProfile?.profile.userProf.id,
+        ],
+      },
+    })
+  }
+
   const approveFriendRequest = async (node: any): Promise<void> => {
     await updateFriends({
       variables: {
