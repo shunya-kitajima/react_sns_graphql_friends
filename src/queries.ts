@@ -30,3 +30,76 @@ export const CREATE_PROFILE = gql`
     }
   }
 `
+
+export const GET_PROFILES = gql`
+  query {
+    allProfiles {
+      edges {
+        node {
+          id
+          userProf {
+            id
+            username
+          }
+          friends {
+            edges {
+              node {
+                id
+                username
+              }
+            }
+          }
+          friendRequests {
+            edges {
+              node {
+                id
+                username
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`
+
+export const GET_MYPROFILE = gql`
+  query {
+    profile {
+      id
+      userProf {
+        id
+        username
+      }
+      friends {
+        edges {
+          node {
+            id
+            username
+          }
+        }
+      }
+      friendRequests {
+        edges {
+          node {
+            id
+            username
+            profile {
+              id
+            }
+            profilesFriends {
+              edges {
+                node {
+                  id
+                  userProf {
+                    id
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`
