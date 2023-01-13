@@ -6,7 +6,17 @@ import styles from './MainPage.module.css'
 const MainPage: React.FC = () => {
   const navigate = useNavigate()
 
-  return <div>MainPage</div>
+  return (
+    <div>
+      <ExitToApp
+        className={styles.mainPage__out}
+        onClick={() => {
+          localStorage.removeItem('token')
+          navigate('/')
+        }}
+      />
+    </div>
+  )
 }
 
 export default MainPage
