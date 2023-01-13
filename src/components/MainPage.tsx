@@ -53,7 +53,7 @@ const MainPage: React.FC = () => {
     })
     await updateFriends({
       variables: {
-        id: node.id,
+        id: node.profile.id,
         friends: [
           ...node.profilesFriends.edges.map(
             ({ node }: any) => node.userProf.id
