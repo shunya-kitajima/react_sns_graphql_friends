@@ -121,6 +121,7 @@ const MainPage: React.FC = () => {
                           .map(({ node }: any) => node.id)
                           .includes(dataMyProfile?.profile.userProf.id)
                       }
+                      onClick={async () => await sendFriendRequest(node)}
                     >
                       {myFriends?.includes(node.userProf.id) ||
                       myFriendRequests?.includes(node.userProf.id) ||
