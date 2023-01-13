@@ -138,7 +138,22 @@ const MainPage: React.FC = () => {
         </Grid>
         <Grid item xs={4}>
           <h3>Friend requests by</h3>
-          <ul className={styles.mainPage__list}></ul>
+          <ul className={styles.mainPage__list}>
+            {dataMyProfile?.profile.friendRequests.edges.map(
+              ({ node }: any) => (
+                <li className={styles.mainPage__item} key={node.id}>
+                  {node.username}
+                  <button
+                    onClick={async () => {
+                      await approveFriendRequest(node)
+                    }}
+                  >
+                    approve
+                  </button>
+                </li>
+              )
+            )}
+          </ul>
         </Grid>
       </Grid>
     </div>
