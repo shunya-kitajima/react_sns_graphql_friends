@@ -51,6 +51,26 @@ export const UPDATE_FRIENDS = gql`
   }
 `
 
+export const UPDATE_FRIEND_REQUESTS = gql`
+  mutation ($id: ID!, $friendRequests: [ID]!) {
+    updateProfile(input: { id: $id, friendRequests: $friendRequests }) {
+      profile {
+        id
+        userProf {
+          username
+        }
+        friendRequests {
+          edges {
+            node {
+              username
+            }
+          }
+        }
+      }
+    }
+  }
+`
+
 export const GET_PROFILES = gql`
   query {
     allProfiles {
