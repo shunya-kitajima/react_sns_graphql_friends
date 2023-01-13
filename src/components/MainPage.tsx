@@ -26,7 +26,7 @@ const MainPage: React.FC = () => {
   const myFriends = dataMyProfile?.profile.friends.edges.map(
     ({ node }: any) => node.id
   )
-  const myFriendRequests = dataMyProfile.profile.friendRequests.edges.map(
+  const myFriendRequests = dataMyProfile?.profile.friendRequests.edges.map(
     ({ node }: any) => node.id
   )
   const [updateFriends] = useMutation(UPDATE_FRIENDS)
@@ -136,7 +136,10 @@ const MainPage: React.FC = () => {
             )}
           </ul>
         </Grid>
-        <Grid item xs={4}></Grid>
+        <Grid item xs={4}>
+          <h3>Friend requests by</h3>
+          <ul className={styles.mainPage__list}></ul>
+        </Grid>
       </Grid>
     </div>
   )
