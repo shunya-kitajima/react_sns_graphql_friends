@@ -73,8 +73,10 @@ export const UPDATE_FRIEND_REQUESTS = gql`
 
 export const CREATE_MESSAGE = gql`
   mutation ($message: String!, $receiver: ID!) {
-    createMessage(input: {message: $message, receiver: $receiver}) {
-
+    createMessage(input: { message: $message, receiver: $receiver }) {
+      message {
+        message
+      }
     }
   }
 `
