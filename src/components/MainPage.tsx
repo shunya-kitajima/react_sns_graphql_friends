@@ -177,7 +177,7 @@ const MainPage: React.FC = () => {
         </Grid>
       </Grid>
       <Grid container>
-        <Grid item xs={4}>
+        <Grid item xs={3}>
           <h3>my friends</h3>
           <ul className={styles.mainPage__list}>
             {dataMyProfile?.profile.friends.edges.map(({ node }: any) => (
@@ -195,7 +195,7 @@ const MainPage: React.FC = () => {
             ))}
           </ul>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={3}>
           <h3>ProfileList</h3>
           <ul className={styles.mainPage__list}>
             {dataProfiles?.allProfiles.edges.map(
@@ -226,7 +226,7 @@ const MainPage: React.FC = () => {
             )}
           </ul>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={3}>
           <h3>Friend requests by</h3>
           <ul className={styles.mainPage__list}>
             {dataMyProfile?.profile.friendRequests.edges.map(
@@ -243,6 +243,28 @@ const MainPage: React.FC = () => {
                 </li>
               )
             )}
+          </ul>
+        </Grid>
+        <Grid item xs={3}>
+          <h3>DM</h3>
+          <ul className={styles.mainPage__list}>
+            {dataDMs?.allMessages.edges.map(({ node }: any) => (
+              <li className={styles.mainPage__item} key={node.id}>
+                {node.message}
+                <div>
+                  <strong>{node.sender.username}</strong>
+                </div>
+                <button
+                  className={styles.mainPage__btn}
+                  onClick={() => {
+                    setSelectedReceiver(node.sender.id)
+                    setIsOpenModal(true)
+                  }}
+                >
+                  reply
+                </button>
+              </li>
+            ))}
           </ul>
         </Grid>
       </Grid>
