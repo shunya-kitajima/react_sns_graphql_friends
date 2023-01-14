@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useQuery } from '@apollo/react-hooks'
 import { useMutation, useLazyQuery } from '@apollo/client'
@@ -123,6 +123,16 @@ const MainPage: React.FC = () => {
     setSelectedReceiver('')
     setIsOpenModal(false)
   }
+
+  useEffect(() => {
+    if (dataMyProfile?.profile.userProf.id) {
+      getDMs({
+        variables: {
+          receiver: dataMyProfile?.profile.userProf.id,
+        },
+      })
+    }
+  }, [dataMyProfile?.profile.userProf.id, getDMs])
 
   return (
     <div className={styles.mainPage__root}>
