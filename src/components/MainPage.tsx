@@ -183,6 +183,14 @@ const MainPage: React.FC = () => {
             {dataMyProfile?.profile.friends.edges.map(({ node }: any) => (
               <li className={styles.mainPage__item} key={node.id}>
                 {node.username}
+                <button
+                  onClick={() => {
+                    setSelectedReceiver(node.id)
+                    setIsOpenModal(true)
+                  }}
+                >
+                  dm send
+                </button>
               </li>
             ))}
           </ul>
