@@ -71,6 +71,14 @@ export const UPDATE_FRIEND_REQUESTS = gql`
   }
 `
 
+export const CREATE_MESSAGE = gql`
+  mutation ($message: String!, $receiver: ID!) {
+    createMessage(input: {message: $message, receiver: $receiver}) {
+
+    }
+  }
+`
+
 export const GET_PROFILES = gql`
   query {
     allProfiles {
@@ -137,6 +145,27 @@ export const GET_MYPROFILE = gql`
                 }
               }
             }
+          }
+        }
+      }
+    }
+  }
+`
+
+export const GET_MESSAGES = gql`
+  query ($receiver: ID!) {
+    allMessages(receiver: $receiver) {
+      edges {
+        node {
+          id
+          message
+          sender {
+            id
+            username
+          }
+          receiver {
+            id
+            username
           }
         }
       }
