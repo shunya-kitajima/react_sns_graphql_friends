@@ -1,14 +1,23 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useQuery } from '@apollo/react-hooks'
-import { useMutation } from '@apollo/client'
-import { Grid } from '@material-ui/core'
+import { useMutation, useLazyQuery } from '@apollo/client'
+import {
+  Grid,
+  Modal,
+  makeStyles,
+  TextField,
+  IconButton,
+} from '@material-ui/core'
 import ExitToApp from '@material-ui/icons/ExitToApp'
+import SendIcon from '@material-ui/icons/Send'
 import {
   UPDATE_FRIENDS,
   UPDATE_FRIEND_REQUESTS,
+  CREATE_MESSAGE,
   GET_PROFILES,
   GET_MYPROFILE,
+  GET_MESSAGES,
 } from '../queries'
 import styles from './MainPage.module.css'
 
@@ -21,6 +30,9 @@ const MainPage: React.FC = () => {
     }
   )
   const { data: dataProfiles, error: errorProfiles } = useQuery(GET_PROFILES, {
+    fetchPolicy: 'cache-and-network',
+  })
+  const { data: dataMessages, error: errorMessages } = useQuery(GET_MESSAGES, {
     fetchPolicy: 'cache-and-network',
   })
   const myFriends = dataMyProfile?.profile.friends.edges.map(
@@ -76,7 +88,8 @@ const MainPage: React.FC = () => {
     <div className={styles.mainPage__root}>
       {(errorProfiles || errorMyProfile) && (
         <h3>
-          {errorProfiles?.message}/{errorMyProfile?.message}
+          {errorProfiles?.message}/{errorMyProfile?.message}/
+          {errorMessages?.message}
         </h3>
       )}
       <Grid container>
