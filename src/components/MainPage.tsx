@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useQuery } from '@apollo/react-hooks'
 import { useMutation, useLazyQuery } from '@apollo/client'
@@ -21,8 +21,35 @@ import {
 } from '../queries'
 import styles from './MainPage.module.css'
 
+const getModalStyle = () => {
+  const top = 50
+  const left = 50
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  }
+}
+
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    outline: 'none',
+    position: 'absolute',
+    width: 250,
+    borderRadius: 3,
+    backgroundColor: 'white',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(3),
+  },
+}))
+
 const MainPage: React.FC = () => {
   const navigate = useNavigate()
+  const classes = useStyles()
+  const [dm, setDm] = useState('')
+  const [isOpenModal, setIsOpenModal] = useState(false)
+  const [selectedReceiver, setSelectedReceiver] = useState('')
   const { data: dataMyProfile, error: errorMyProfile } = useQuery(
     GET_MYPROFILE,
     {
@@ -32,7 +59,7 @@ const MainPage: React.FC = () => {
   const { data: dataProfiles, error: errorProfiles } = useQuery(GET_PROFILES, {
     fetchPolicy: 'cache-and-network',
   })
-  const { data: dataMessages, error: errorMessages } = useQuery(GET_MESSAGES, {
+  const [getDMs, { data: dataDMs }] = useLazyQuery(GET_MESSAGES, {
     fetchPolicy: 'cache-and-network',
   })
   const myFriends = dataMyProfile?.profile.friends.edges.map(
@@ -43,6 +70,7 @@ const MainPage: React.FC = () => {
   )
   const [updateFriends] = useMutation(UPDATE_FRIENDS)
   const [updateFriendRequests] = useMutation(UPDATE_FRIEND_REQUESTS)
+  const [createMessage] = useMutation(CREATE_MESSAGE)
 
   const sendFriendRequest = async (node: any): Promise<void> => {
     await updateFriendRequests({
@@ -84,12 +112,23 @@ const MainPage: React.FC = () => {
     })
   }
 
+  const createDM = async () => {
+    await createMessage({
+      variables: {
+        message: dm,
+        receiver: selectedReceiver,
+      },
+    })
+    setDm('')
+    setSelectedReceiver('')
+    setIsOpenModal(false)
+  }
+
   return (
     <div className={styles.mainPage__root}>
       {(errorProfiles || errorMyProfile) && (
         <h3>
-          {errorProfiles?.message}/{errorMyProfile?.message}/
-          {errorMessages?.message}
+          {errorProfiles?.message}/{errorMyProfile?.message}
         </h3>
       )}
       <Grid container>
