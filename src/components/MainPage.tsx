@@ -253,16 +253,16 @@ const MainPage: React.FC = () => {
                 {node.message}
                 <div>
                   <strong>{node.sender.username}</strong>
+                  <button
+                    className={styles.mainPage__btn}
+                    onClick={() => {
+                      setSelectedReceiver(node.sender.id)
+                      setIsOpenModal(true)
+                    }}
+                  >
+                    reply
+                  </button>
                 </div>
-                <button
-                  className={styles.mainPage__btn}
-                  onClick={() => {
-                    setSelectedReceiver(node.sender.id)
-                    setIsOpenModal(true)
-                  }}
-                >
-                  reply
-                </button>
               </li>
             ))}
           </ul>
