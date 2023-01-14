@@ -112,7 +112,7 @@ const MainPage: React.FC = () => {
     })
   }
 
-  const createDM = async () => {
+  const createDM = async (): Promise<void> => {
     await createMessage({
       variables: {
         message: dm,
@@ -141,6 +141,24 @@ const MainPage: React.FC = () => {
           {errorProfiles?.message}/{errorMyProfile?.message}
         </h3>
       )}
+      <Modal open={isOpenModal} onClose={() => setIsOpenModal(false)}>
+        <div style={getModalStyle()} className={classes.modal}>
+          <div className={styles.mainPage__modal}>
+            <TextField
+              InputLabelProps={{
+                shrink: true,
+              }}
+              label="DM"
+              type="text"
+              value={dm}
+              onChange={(e) => setDm(e.target.value)}
+            />
+            <IconButton onClick={async () => await createDM()}>
+              <SendIcon />
+            </IconButton>
+          </div>
+        </div>
+      </Modal>
       <Grid container>
         <Grid item xs>
           {dataMyProfile?.profile.userProf.username}
